@@ -67,7 +67,11 @@ echo;
 echo "user: $(id)";
 echo "kernel: $(uname -sr)";
 printf 'python3: '; python3 --version;
-printf 'find: '; find --version | head -1;
+printf 'find: ';
+# --version prints the version and walks no path, so the missing path SC2185
+# asks for would be meaningless here.
+# shellcheck disable=SC2185
+find --version | head -1;
 printf 'mv: '; mv --version | head -1;
 if [ "$FINDMNT_AVAILABLE" -eq 1 ]; then
   printf 'findmnt: '; findmnt --version | head -1;
