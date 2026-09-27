@@ -45,15 +45,14 @@ portable to macOS or BSD userlands as written.
 
 ## Usage
 
-```
-chmod +x blast_radius_reproductions.sh
-./blast_radius_reproductions.sh
+```bash
+bash blast_radius_reproductions.sh;
 ```
 
 The `time` figures in section 4 and the kernel's own `Permission denied`
 messages in section 7 are written to standard error. To capture a full run
 including those, redirect both streams:
-`./blast_radius_reproductions.sh > run.txt 2>&1`.
+`bash blast_radius_reproductions.sh > run.txt 2>&1`.
 
 Runs in a few seconds on a local Linux filesystem; file creation may take
 noticeably longer on WSL2, overlay filesystems, virtualized or network
@@ -131,7 +130,11 @@ article open still gets the point of what they're about to see.
    echo "user: $(id)";
    echo "kernel: $(uname -sr)";
    printf 'python3: '; python3 --version;
-   printf 'find: '; find --version | head -1;
+   printf 'find: ';
+   # --version prints the version and walks no path, so the missing path SC2185
+   # asks for would be meaningless here.
+   # shellcheck disable=SC2185
+   find --version | head -1;
    printf 'mv: '; mv --version | head -1;
    if [ "$FINDMNT_AVAILABLE" -eq 1 ]; then
      printf 'findmnt: '; findmnt --version | head -1;
