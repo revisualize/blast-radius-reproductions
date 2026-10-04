@@ -1,5 +1,15 @@
 # blast-radius-reproductions
 
+[![ci](https://github.com/revisualize/blast-radius-reproductions/actions/workflows/ci.yml/badge.svg)](https://github.com/revisualize/blast-radius-reproductions/actions/workflows/ci.yml)
+[![test](https://github.com/revisualize/blast-radius-reproductions/actions/workflows/test.yml/badge.svg)](https://github.com/revisualize/blast-radius-reproductions/actions/workflows/test.yml)
+[![shellcheck](https://github.com/revisualize/blast-radius-reproductions/actions/workflows/shellcheck.yml/badge.svg)](https://github.com/revisualize/blast-radius-reproductions/actions/workflows/shellcheck.yml)
+[![bash-compat](https://github.com/revisualize/blast-radius-reproductions/actions/workflows/bash-compat.yml/badge.svg)](https://github.com/revisualize/blast-radius-reproductions/actions/workflows/bash-compat.yml)
+[![python-compat](https://github.com/revisualize/blast-radius-reproductions/actions/workflows/python-compat.yml/badge.svg)](https://github.com/revisualize/blast-radius-reproductions/actions/workflows/python-compat.yml)
+[![markdown-lint](https://github.com/revisualize/blast-radius-reproductions/actions/workflows/markdown-lint.yml/badge.svg)](https://github.com/revisualize/blast-radius-reproductions/actions/workflows/markdown-lint.yml)
+[![links](https://github.com/revisualize/blast-radius-reproductions/actions/workflows/links.yml/badge.svg)](https://github.com/revisualize/blast-radius-reproductions/actions/workflows/links.yml)
+[![content-policy](https://github.com/revisualize/blast-radius-reproductions/actions/workflows/content-policy.yml/badge.svg)](https://github.com/revisualize/blast-radius-reproductions/actions/workflows/content-policy.yml)
+[![license: all rights reserved](https://img.shields.io/badge/license-all%20rights%20reserved-lightgrey)](LICENSE)
+
 The experiments and calculations behind the quantitative demonstrations in
 [What a Bounded Blast Radius Still Lets Through](https://revisualized.com/articles/what-a-bounded-blast-radius-still-lets-through),
 runnable, in one file. It doesn't reproduce every number in the article: a
@@ -313,6 +323,23 @@ script doesn't simulate that case. Section 7 demonstrates a POSIX uid
 boundary specifically; it says nothing about namespaces, cgroups, or RBAC
 policies, which enforce the same underlying principle at container and
 platform scale but aren't tested here.
+
+## Continuous integration
+
+Each badge above is its own GitHub Actions workflow in `.github/workflows/`. Every workflow runs on each push and pull request, can be re-run by hand from the Actions tab, and links to its run history.
+
+| Workflow | A green badge means |
+|---|---|
+| [`ci`](https://github.com/revisualize/blast-radius-reproductions/actions/workflows/ci.yml) | `bash test/run_all_tests.sh` passed on Python 3.9 and 3.12 and reported a non-zero count of executed tests, and shellcheck found nothing at style severity. |
+| [`test`](https://github.com/revisualize/blast-radius-reproductions/actions/workflows/test.yml) | `bash test/run_all_tests.sh` passed on Python 3.9 and 3.12. The run fails if any suite fails or if zero tests executed, and the job summary lists each suite with its test count. |
+| [`shellcheck`](https://github.com/revisualize/blast-radius-reproductions/actions/workflows/shellcheck.yml) | Every shell script outside `test/fixtures/` parses with `bash -n` and has no shellcheck findings at style severity. |
+| [`bash-compat`](https://github.com/revisualize/blast-radius-reproductions/actions/workflows/bash-compat.yml) | The test suite passed under every Bash release from the floor stated in Requirements through 5.3, each built from its release source. |
+| [`python-compat`](https://github.com/revisualize/blast-radius-reproductions/actions/workflows/python-compat.yml) | The test suite passed under every Python release from 3.9 through 3.14. |
+| [`markdown-lint`](https://github.com/revisualize/blast-radius-reproductions/actions/workflows/markdown-lint.yml) | Every Markdown file passes markdownlint. |
+| [`links`](https://github.com/revisualize/blast-radius-reproductions/actions/workflows/links.yml) | Every link in every Markdown file resolved on the latest run. It also runs weekly, because a link can break with no commit here. |
+| [`content-policy`](https://github.com/revisualize/blast-radius-reproductions/actions/workflows/content-policy.yml) | Every tracked file meets the publishing rules: UTF-8, LF line endings, no em dashes, scripts documented as `bash name.sh`, and vendor-neutral wording. |
+
+A badge reports the latest run of those checks. What the tool needs on your own host is listed under Requirements.
 
 ## License
 
